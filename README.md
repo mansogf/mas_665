@@ -25,6 +25,11 @@ mas_665/
 │   ├── main.py            # Interactive AI system using CrewAI
 │   ├── requirements.txt   # Python dependencies
 │   └── README.md         # Detailed project documentation
+├── hw2/                    # Homework 2: NANDA adapter + agents
+│   └── adapter/
+│       └── nanda_adapter/
+│           └── examples/
+│               └── gabriel.py  # Gabriel agent entrypoint (NANDA-hosted)
 ├── .gitignore             # Git ignore patterns (excludes venv/, .env, etc.)
 └── README.md             # This file
 ```
@@ -105,6 +110,60 @@ The first assignment explores the creation of an interactive AI assistant that e
    ```
 
 > **📋 For complete setup instructions**: See the detailed guide in `hw1/README.md` which includes Ollama installation, API key setup, and troubleshooting.
+
+### Run HW2 Agent (NANDA Adapter) — `gabriel.py`
+
+Follow these steps to start the Gabriel agent hosted by NANDA.
+
+1) Navigate to the adapter and set up a virtual environment
+
+```bash
+cd hw2/adapter
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+# Install the adapter package locally so examples can import it
+pip install -e .
+```
+
+2) Set required environment variables
+
+```bash
+# Required
+export ANTHROPIC_API_KEY="your-anthropic-key"
+export DOMAIN_NAME="agent.gmanso.com"   # or your domain
+
+# Optional (enables web search in research/music agents)
+export SERPER_API_KEY="your-serper-api-key"
+```
+
+3) Run the Gabriel agent
+
+```bash
+python nanda_adapter/examples/gabriel.py
+```
+
+If startup fails with a missing package error for `nanda_adapter`, ensure you ran `pip install -e .` from `hw2/adapter` while your virtual environment is active.
+
+#### What `gabriel.py` does
+
+- **Persona-first agent**: Implements Gabriel’s speaking style and values; replies are sanitized for plain, human text.
+- **Three CrewAI agents** working together:
+  - Personal Identity Representative (conversational intro and free chat)
+  - Research Synthesis Specialist (recent news/trends; optional web search via Serper)
+  - Music Intelligence Curator (new/related releases that fit Gabriel’s taste)
+- **NANDA-hosted service**: `gabriel.py` wraps the Crew into a simple HTTP bridge via `NANDA.start_server_api(api_key, domain_name)`.
+- **Built‑in commands** (send these messages to the agent UI/bridge):
+  - `intro` or `1`: natural self‑introduction
+  - `music` or `3`: music recommendations
+  - `2 <topic>` or `research <topic>`: do a recent‑focused research pass
+  - anything else: freeform conversation in Gabriel’s voice
+
+#### Conversation snapshot
+
+The screenshot below shows a short session with intro, research, and music flows.
+
+![Gabriel agent conversation](hw2/img/agent_conversation.png)
 
 ## Troubleshooting
 
