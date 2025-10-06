@@ -1,0 +1,29 @@
+# Core AI and LLM dependencies
+crewai>=0.28.8
+crewai[tools]>=0.28.8 
+openai>=1.0.0
+litellm>=1.0.0
+
+# Environment and utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# Audio processing
+openai-whisper>=20231130
+sounddevice>=0.4.6
+soundfile>=0.12.1
+
+# Kokoro TTS (requires Python <3.13)
+kokoro>=0.7.16
+torch>=2.0.0
+numpy>=1.24.0
+
+# Additional audio dependencies for Kokoro
+misaki[en]>=0.7.16
+
+# System dependencies (usually pre-installed)
+# asyncio - built into Python 3.7+
+# os, platform, subprocess, tempfile, uuid, warnings - built into Python
+# datetime, pathlib, typing, contextlib - built into Python
